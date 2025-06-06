@@ -13,7 +13,7 @@ def login_user(): # Renamed function for clarity
   data = request.get_json()
   
   username = data.get('username')
-  password = data.get('password')
+  password = data.get('password') 
   
   # Basic validation if username/password are empty
   if not username or not password:

@@ -3,28 +3,46 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [userdata, setUserdata] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [loginFeedback, setLoginFeedback] = useState(null)
 
-  const verifyLogin = () => {
-    console.log('Checking...')
-    axios.post('http://127.0.0.1:5000')
-      .then(response => {
-        console.log(response);
-        setUserdata(response.data)
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    setLoginFeedback({ message: "Attempting Login", status: "Info" });
+    console.log('Sending Login Requests...')
+
+    
+    try{
+      const response = await axios.post('http://127.0.0.1:5000/login', {
+      username: username,
+      password: password
       })
-      .catch(
-        error => {
-          console.error('Login Failed', error)
-          setUserdata({
-            status: "Error", 
-            message: error.message
-          });
-        }
-      )
-  }
 
+      console.log('-------------------Full Axios Response--------------------')
+      console.log(response)
+      console.log(`username: ${response.data.username}\npassword: ${response.password}`)
+    } catch{err =>{
+      console.error('Error Fetching', err)
+
+      if (error.response) {
+        console.error('Server Error Response: ', err.response.data)
+        console.error('Server Error Status: ', err.response.status)
+      }else if (err.request) {
+        console.error('No Response from Server: ', err.request)
+      }else {
+        console.error('Request Setup Error:', err.message);
+      }
+    }
+
+    }
+
+    console.log('--------------------------------------------------------------')
+    console.log('--------------------------------------------------------------')
+    console.log('Done Fetching!')
+
+  }
 
 
   return (
@@ -51,14 +69,8 @@ const App = () => {
           className='text-2xl border p-2 rounded-md bg-green-400 text-white'
           type='submit'
           value='Submit'
-          onClick={ verifyLogin } />
+          onClick={ handleSubmit } />
         </div>
-
-        { userdata && (
-          <div className="mt-4 p-2 bg-gray-100 rounded">
-            <pre>{JSON.stringify(userdata, null, 2)}</pre>
-          </div>
-        ) }
       </div>
     </div>
   )
