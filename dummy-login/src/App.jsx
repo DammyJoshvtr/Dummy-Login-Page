@@ -31,16 +31,15 @@ const App = () => {
         status: response.data.status || "success"
       });
 
-    } catch (err) { // CORRECT CATCH SYNTAX!
-      console.error('Error Fetching:', err); // Log the full error object
+    } catch (err) {
+      console.error('Error Fetching:', err); 
 
-      // Check for server response errors
-      if (err.response) { // CORRECT: using 'err.response'
+      if (err.response) {
         console.error('Server Error Response Data:', err.response.data);
         console.error('Server Error Status:', err.response.status);
-        setLoginFeedback({ // Update feedback with server's error message
+        setLoginFeedback({
           message: err.response.data.message || `Server error (Status: ${err.response.status})`,
-          status: err.response.data.status || "error" // Use specific status from backend if available
+          status: err.response.data.status || "error" 
         });
       } else if (err.request) {
         console.error('No Response from Server:', err.request);
@@ -48,14 +47,14 @@ const App = () => {
           message: "No response from server. Check network connection or server status.",
           status: "error"
         });
-      } else { // Other errors (e.g., Axios setup error)
+      } else { 
         console.error('Request Setup Error:', err.message);
         setLoginFeedback({
           message: err.message || "An unexpected error occurred during request setup.",
           status: "error"
         });
       }
-    } finally { // <--- Added the 'finally' block
+    } finally {
       console.log('--------------------------------------------------------------');
       console.log('Done Fetching!');
       console.log('--------------------------------------------------------------'); 
