@@ -1,8 +1,8 @@
 import React from 'react'
-import { Tailspin } from 'react-loader-spinner'
+import { TailSpin } from 'react-loader-spinner'
 
-const Tailspin = () => {
-  return <Tailspin 
+const Tailspiner = () => {
+  return <TailSpin 
     visible={true}
     height="80"
     width="80"
@@ -12,4 +12,4 @@ const Tailspin = () => {
   />
 }
 
-export default Tailspin
+export default Tailspiner

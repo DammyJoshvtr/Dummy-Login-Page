@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Tailspiner from '../assets/spinners/Tailspiner';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginFeedback, setLoginFeedback] = useState(null);
+  const [loading, setLoading] = useState(false)
   
   const navigate = useNavigate()
 
@@ -21,6 +23,8 @@ const LoginPage = () => {
         password: password
       });
 
+      setLoading(true)
+
       console.log('-------------------Full Axios Response--------------------');
       console.log(response); // Correct way to log the full object
       console.log('----------------------------------------------------------');
@@ -35,7 +39,11 @@ const LoginPage = () => {
       });
 
       if (response.data.status === 'success') {
-        navigate('/dashboard')
+        
+        setTimeout(() => {
+          navigate('/dashboard')
+
+        }, 500)
       }
 
     } catch (err) {
@@ -65,6 +73,7 @@ const LoginPage = () => {
       console.log('--------------------------------------------------------------');
       console.log('Done Fetching!');
       console.log('--------------------------------------------------------------'); 
+      setLoading(false)
     }
   };
 
@@ -95,6 +104,12 @@ const LoginPage = () => {
             value='Submit'
             onClick={handleSubmit} />
         </div>
+
+        { loading && (
+          <div>
+            <Tailspiner />
+          </div>
+        ) }
 
         {loginFeedback && (
           <div className={`mt-4 p-2 rounded ${loginFeedback.status === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>

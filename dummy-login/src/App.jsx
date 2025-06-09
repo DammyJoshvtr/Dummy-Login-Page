@@ -6,12 +6,12 @@ import Dashboard from './pages/Dashboard';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <React.Fragment>
+      <Route path='/' element={ <Navigate to='/login' /> } />
       <Route path='/login' element = { <LoginPage /> } />
       <Route path='/dashboard' element = { <Dashboard /> } />
     </React.Fragment>
   )
 )
-
 
 const App = () => {
   return (
