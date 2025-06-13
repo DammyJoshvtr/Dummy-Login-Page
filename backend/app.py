@@ -34,7 +34,7 @@ def login_user():
     }), 401
     
     
-@app.route('/card_slider_data', methods=['POST'])
+@app.route('/card_slider_data', methods=['GET'])
 def card_slider_data():
   
   data_for_slider = [

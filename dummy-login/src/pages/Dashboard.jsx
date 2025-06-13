@@ -1,7 +1,41 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+
 
 const Dashboard = () => {
+
+  const [cards, setCards] = useState(true)
+
+  useEffect(() => {
+
+    console.log('Fetching Data...')
+    const fetchingDataCards = async () => {
+      try {
+        console.log('------------------------Axios Response-------------------------------')
+        const response = await axios.get('http://localhost:5000/card_slider_data')
+
+        console.log('Fetching Received: ', response.status )
+        console.log('Response: ', response)
+
+        setCards(response.data); // Update state with the fetched data
+
+        
+
+        console.log('-------------------Data Fetching Complete--------------------------')
+      } catch(err) {
+        console.log('-----------Error Fetching Data----------')
+        if (err.response) {
+          console.error('Error Fetching', err.response)
+        }
+        console.error(err)
+      }
+    }
+    fetchingDataCards()
+  }, [])
+
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -10,16 +44,20 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='h-screen flex flex-col items-center justify-center bg-gray-100'>
-      <h1 className='text-5xl font-bold text-green-600 mb-8'>Welcome to the Dashboard!</h1>
-      <p className='text-xl text-gray-700 mb-10'>You are successfully logged in.</p>
-      <button
-        onClick={handleLogout}
-        className='px-6 py-3 bg-red-500 text-white text-lg rounded-md shadow-lg hover:bg-red-600 transition duration-300'
-      >
-        Logout
-      </button>
-    </div>
+    <section className='h-screen'>
+      <div className='h-20 flex flex-col items-center justify-center bg-gray-100'>
+        <h1 className='text-3xl'>Welcome to the Dashboard!</h1>
+      </div>
+
+      {/* <div className=''>
+        {cards.map((item) => (
+          <p>
+            {item.description}
+          </p>
+        ))}
+      </div> */}
+
+    </section>
   );
 };
 
